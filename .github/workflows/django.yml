@@ -22,7 +22,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - uses: actions/cache@v1
+    - uses: actions/checkout@v3
       name: Cache pip dependencies
     - uses: actions/setup-python@v4
       with:
