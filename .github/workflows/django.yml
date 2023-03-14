@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       max-parallel: 1
       matrix:
@@ -17,6 +17,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      id: setup-python
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -24,11 +25,15 @@ jobs:
 
     - uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
-        cache: 'pip' # caching pip dependencies
+        path: |
+          venv
+        key: ${{ runner.os }}-venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/*requirements.txt') }}
 
     - name: Install Dependencies
+      if: steps.cache-dependencies.outputs.cache-hit != 'true'
       run: |
+        python -m venv venv
+        . venv/bin/activate
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
