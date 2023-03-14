@@ -17,15 +17,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      id: setup-python
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
 
-    - uses: actions/setup-python@v4
+    - uses: actions/cache@v1
+      name: Cache pip dependencies
+      id: pip-cache
       with:
-        path: ${{ env.pythonLocation }}
-        key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
 
     - name: Install Dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true'
