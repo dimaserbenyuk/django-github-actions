@@ -38,8 +38,8 @@ jobs:
         python3 -m venv venv
         source venv/bin/activate
         python -m pip install --upgrade pip
-        pip install django
-        pip install flake8
+        pip3 install django
+        pip3 install flake8
         pip freeze > requirements.txt
         pip install -r requirements.txt
     - name: Run Tests
