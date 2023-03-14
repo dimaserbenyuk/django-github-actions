@@ -53,6 +53,6 @@ jobs:
           use_git: true
           git_branch: main
       - name: set remote
-        run: git remote set-url origin https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/{{secrets.HEROKU_APP_NAME }}.git
+        run: git remote set-url origin https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/djangogithubactions.git
       - name: push and deploy
         run: git push origin HEAD:main -f
