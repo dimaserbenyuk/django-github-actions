@@ -22,10 +22,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - uses: actions/cache@v2
+    - uses: actions/setup-python@v4
       with:
-        path: ~/.cache/pip
-        key: ${{ hashFiles('setup.py') }}-${{ hashFiles('requirements.txt') }}
+        python-version: '3.9'
+        cache: 'pip' # caching pip dependencies
 
     - name: Install Dependencies
       run: |
