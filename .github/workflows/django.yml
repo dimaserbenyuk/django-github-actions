@@ -38,6 +38,7 @@ jobs:
         python manage.py test
 
   heroku_git_deploy_job:
+    needs: build
     runs-on: ubuntu-latest
     name: Git Deploy job- A job to deploy django app to heroku using git
     steps:
