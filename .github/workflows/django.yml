@@ -69,7 +69,7 @@ jobs:
       run: |
         pip install pytest
         pip install pytest-cov
-        pytest --cov-report xml:path/to/coverage.xml
+        pytest --cov=./ --cov-report=xml
         
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -84,16 +84,16 @@ jobs:
         verbose: true
 
 
-  coverage:
-    needs: test
-    name: coverage
-    runs-on: ubuntu-latest
-    steps:
-    - name: Get Cover 
-      uses: orgoro/coverage@v3
-      with:
-          coverageFile: path/to/coverage.xml
-          token: ${{ secrets.TOKEN }}
+  # coverage:
+  #   needs: test
+  #   name: coverage
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Get Cover 
+  #     uses: orgoro/coverage@v3
+  #     with:
+  #         coverageFile: path/to/coverage.xml
+  #         token: ${{ secrets.TOKEN }}
 # pytest --cov=./ --cov-report=xml
   # coverage:
   #   needs: test
