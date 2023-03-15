@@ -1,5 +1,6 @@
 import pytest
 
+
 @pytest.fixture
 def example_people_data():
     return [
