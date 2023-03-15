@@ -40,6 +40,23 @@ jobs:
       run: |
         python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')"  
 
+  coverage:
+    needs: build
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        python-version: ${{ matrix.python-version }}
+    - run: python -m pip install --upgrade pip
+    - run: pip install -r requirements.txt
+    - uses: paambaati/codeclimate-action@v2.2.4
+      env:
+        CC_TEST_REPORTER_ID: 99907a756a182e45fefdf3bbc35bfdc2603aba547adc59c689a33010cb501e77
+      with:
+        coverageCommand: coverage run manage.py test
+
   heroku_git_deploy_job:
     needs: build
     runs-on: ubuntu-latest
