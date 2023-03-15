@@ -37,6 +37,7 @@ jobs:
       run: |
         python manage.py makemigrations --noinput
         python manage.py migrate --noinput
+        echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'dserbenyukgood@gmail.com', 'test1212')" | python manage.py shell
 
   heroku_git_deploy_job:
     needs: build
