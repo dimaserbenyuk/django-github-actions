@@ -11,3 +11,6 @@ def test_some_primes():
         for num in range(2, 50)
         if not any(num % div == 0 for div in range(2, num))
     }
+
+def test_reversed_wer():
+    assert list(reversed([1, 2, 3, 4,5])) == [5,4, 3, 2, 1]
