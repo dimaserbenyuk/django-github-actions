@@ -100,14 +100,14 @@ jobs:
   #        coverageLocations: |
   #          ${{github.workspace}}/coverage.xml:coverage.py
 
-  # heroku_git_deploy_job:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   name: deploy django app to heroku
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
-  #       with:
-  #         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-  #         heroku_app_name: "djangogithubactions" #Must be unique in Heroku
-  #         heroku_email: "dserbenyukgood@gmail.com"
+  heroku_git_deploy_job:
+    needs: test
+    runs-on: ubuntu-latest
+    name: deploy django app to heroku
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "djangogithubactions" #Must be unique in Heroku
+          heroku_email: "dserbenyukgood@gmail.com"
