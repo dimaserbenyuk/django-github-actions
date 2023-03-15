@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','djangogithubactions.herokuapp.com']
 
-CSRF_TRUSTED_ORIGINS = ["https://djangogithubactions.herokuapp.com,https://djangogithubactions.herokuapp.com/admin"]
+CSRF_TRUSTED_ORIGINS = ['djangogithubactions.herokuapp.com']
 
 # Application definition
 
