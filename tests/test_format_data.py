@@ -13,4 +13,9 @@ def example_people_data():
             "family_name": "Khan",
             "title": "Project Manager",
         },
+        {
+            "given_name": "Sayid",
+            "family_name": "Khan",
+            "title": "Project Manager",
+        },
     ]
