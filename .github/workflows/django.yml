@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       max-parallel: 1
       matrix:
@@ -42,7 +42,7 @@ jobs:
 
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build
     strategy:
       max-parallel: 1
