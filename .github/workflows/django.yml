@@ -51,20 +51,21 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - run: python -m pip install --upgrade pip
     - run: pip install -r requirements.txt
-    - uses: paambaati/codeclimate-action@v2.2.4
+    - name: Test & publish code coverage
+      uses: paambaati/codeclimate-action@v3.2.0
       env:
         CC_TEST_REPORTER_ID: 99907a756a182e45fefdf3bbc35bfdc2603aba547adc59c689a33010cb501e77
       with:
         coverageCommand: coverage run manage.py test
 
-  heroku_git_deploy_job:
-    needs: build
-    runs-on: ubuntu-latest
-    name: deploy django app to heroku
-    steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "djangogithubactions" #Must be unique in Heroku
-          heroku_email: "dserbenyukgood@gmail.com"
+  # heroku_git_deploy_job:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   name: deploy django app to heroku
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
+  #       with:
+  #         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #         heroku_app_name: "djangogithubactions" #Must be unique in Heroku
+  #         heroku_email: "dserbenyukgood@gmail.com"
