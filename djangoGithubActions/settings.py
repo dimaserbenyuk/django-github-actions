@@ -34,7 +34,6 @@ ALLOWED_HOSTS = ['localhost','djangogithubactions.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = ['https://djangogithubactions.herokuapp.com']
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
