@@ -10,10 +10,12 @@ iniconfig==2.0.0
 mccabe==0.7.0
 packaging==23.0
 pluggy==1.0.0
+psycopg2==2.9.5
 pycodestyle==2.10.0
 pyflakes==3.0.1
 pytest==7.2.2
 pytest-cov==4.0.0
 sqlparse==0.4.3
 tomli==2.0.1
+whatever==0.7
 whitenoise==6.4.0
