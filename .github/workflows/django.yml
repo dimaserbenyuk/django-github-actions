@@ -72,7 +72,7 @@ jobs:
         verbose: true
 
   coverage:
-    needs: build
+    needs: test
     name: coverage
     runs-on: ubuntu-latest
     steps:
