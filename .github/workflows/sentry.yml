@@ -1,4 +1,4 @@
-name: New Sentry Release and Deploy to Heroku
+name: Sentry
 
 on:
   push:
