@@ -1,0 +1,30 @@
+name: New Sentry Release and Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+   runs-on: self-hosted
+   env:
+     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+     SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+     SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+     SENTRY_DEPLOY_ENVIRONMENT: ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
+     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+     HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+
+   steps: 
+    # See: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#using-the-checkout-action
+    - uses: actions/checkout@v2
+    - name: Create Sentry release
+      uses: getsentry/action-release@v1
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        # SENTRY_URL: https://sentry.io/
+      with:
+        environment: production
