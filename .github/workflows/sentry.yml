@@ -6,15 +6,8 @@ on:
       - main
 
 jobs:
-  release:
+  senrty:
    runs-on: self-hosted
-   env:
-     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-     SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-     SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-     SENTRY_DEPLOY_ENVIRONMENT: ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
-     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-     HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
    steps: 
     # See: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#using-the-checkout-action
