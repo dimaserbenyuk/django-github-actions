@@ -47,9 +47,9 @@ jobs:
     # - name: Run migrations
     #   run: |
     #     python manage.py migrate
-    - name: Create superuser
-      run: |
-        python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')"  
+    # - name: Create superuser
+    #   run: |
+    #     python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')"  
 
 
   test:
