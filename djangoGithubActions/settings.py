@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-#v)+2-68_iyd24ysk@wj_uuw--3xm8lrmka=o+*c=c71(=sp5c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','djangogithubactions.herokuapp.com']
+ALLOWED_HOSTS = ['localhost','djangogithubactions.herokuapp.com','127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = ['https://djangogithubactions.herokuapp.com']
 
@@ -136,3 +136,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://b5a4ac43f018468ca0bde09f78bf30b7@o1297015.ingest.sentry.io/4504853357133824",
+    integrations=[
+        DjangoIntegration(),
+    ],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)

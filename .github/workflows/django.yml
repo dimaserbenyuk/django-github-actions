@@ -44,12 +44,12 @@ jobs:
         . venv/bin/activate
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Run migrations
-      run: |
-        python manage.py migrate
-    - name: Create superuser
-      run: |
-        python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')"  
+    # - name: Run migrations
+    #   run: |
+    #     python manage.py migrate
+    # - name: Create superuser
+    #   run: |
+    #     python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')"  
 
 
   test:
