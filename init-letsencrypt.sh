@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(django.prometheusit.fun)
+domains=(django.projectnext.uk)
 rsa_key_size=4096
 data_path="./docker/nginx/certbot"
 email="dserbenyukgood@gmail.com" # Adding a valid address is strongly recommended
