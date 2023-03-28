@@ -30,9 +30,9 @@ SECRET_KEY = 'django-insecure-#v)+2-68_iyd24ysk@wj_uuw--3xm8lrmka=o+*c=c71(=sp5c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','djangogithubactions.herokuapp.com','127.0.0.1','0.0.0.0','3.249.110.232','django.projectnext.uk']
+ALLOWED_HOSTS = ['localhost','djangogithubactions.herokuapp.com','127.0.0.1','0.0.0.0','3.249.110.232','test.projectnext.uk']
 
-CSRF_TRUSTED_ORIGINS = ['https://django.projectnext.uk/']
+CSRF_TRUSTED_ORIGINS = ['https://test.projectnext.uk/']
 
 
 INSTALLED_APPS = [
