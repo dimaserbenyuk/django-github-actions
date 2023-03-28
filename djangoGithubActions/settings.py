@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-#v)+2-68_iyd24ysk@wj_uuw--3xm8lrmka=o+*c=c71(=sp5c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','djangogithubactions.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','djangogithubactions.herokuapp.com','127.0.0.1','0.0.0.0']
 
 CSRF_TRUSTED_ORIGINS = ['https://djangogithubactions.herokuapp.com']
 
@@ -131,6 +131,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'djangoGithubActions/static/')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

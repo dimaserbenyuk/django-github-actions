@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  dependencies:
 
     runs-on: self-hosted
     strategy:
@@ -51,6 +51,9 @@ jobs:
     #   run: |
     #     python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')"  
 
+  build:
+    runs-on: self-hosted
+    needs: build
 
   test:
     runs-on: self-hosted
