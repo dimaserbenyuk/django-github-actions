@@ -53,6 +53,7 @@
                 </div>
 
                 {% if user.is_authenticated %}
+                {% csrf_token %}
                 <figure class="bg-gray-100 rounded-xl p-8">
                     <img class="w-32 h-32 rounded-full mx-auto" src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
                         alt="" width="384" height="512">
@@ -93,6 +94,7 @@
                 <div class="flex justify-center py-4">
 
                     {% if user.is_authenticated %}
+                    {% csrf_token %}
                     <a href="{% url 'account_logout' %}" style="text-decoration: none;"
                         class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Sign
                         Out</a>
