@@ -4,3 +4,17 @@
 pip freeze > requirements.txt
 
 gunicorn --bind 0.0.0.0:8000 djangoGithubActions.wsgi
+
+
+pip install -r requirements.txt
+
+
+sudo apt install -y python3-venv
+
+python3 -m venv env
+
+source env/bin/activate
+
+python manage.py runserver
+
+docker-compose -f docker-compose.yml up --build -d
