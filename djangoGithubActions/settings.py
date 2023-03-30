@@ -32,8 +32,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','djangogithubactions.herokuapp.com','127.0.0.1','0.0.0.0','3.249.110.232','test.projectnext.uk']
 
-CSRF_TRUSTED_ORIGINS = ['https://test.projectnext.uk/']
 
+CSRF_TRUSTED_ORIGINS = ['https://*.projectnext.uk','https://*.127.0.0.1']
+CSRF_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
