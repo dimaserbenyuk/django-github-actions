@@ -109,7 +109,8 @@ jobs:
       - name: Build web image
         uses: docker/build-push-action@v3
         with:
-          context: /docker/production/Dockerfile
+          dockerfile: ./docker/production/Dockerfile
+          context: .
           target: nginx
           push: ${{ github.ref == 'refs/heads/master' }}
           tags: |
