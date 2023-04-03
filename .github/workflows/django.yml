@@ -82,7 +82,7 @@ jobs:
         verbose: true
 
   senrty:
-   runs-on: self-hosted
+   runs-on: ubuntu-latest
    needs: test
    steps: 
     # See: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#using-the-checkout-action
