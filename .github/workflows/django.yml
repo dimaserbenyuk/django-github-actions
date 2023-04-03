@@ -9,7 +9,7 @@ on:
 jobs:
   dependencies:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
       matrix:
@@ -51,12 +51,12 @@ jobs:
     #   run: |
     #     python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')"  
 
-  build:
-    runs-on: self-hosted
+  build-docker-image:
+    runs-on: ubuntu-latest
     needs: build
 
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: build
     strategy:
       max-parallel: 1
@@ -86,6 +86,21 @@ jobs:
         name: codecov-umbrella
         verbose: true
 
+  senrty:
+   runs-on: self-hosted
+   needs: test
+   steps: 
+    # See: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#using-the-checkout-action
+    - uses: actions/checkout@v2
+    - name: Create Sentry release
+      uses: getsentry/action-release@v1
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        # SENTRY_URL: https://sentry.io/
+      with:
+        environment: production
   # coverage:
   #   needs: test
   #   name: coverage
@@ -103,14 +118,14 @@ jobs:
   #        coverageLocations: |
   #          ${{github.workspace}}/coverage.xml:coverage.py
 
-  heroku_git_deploy_job:
-    needs: test
-    runs-on: ubuntu-latest
-    name: deploy django app to heroku
-    steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "djangogithubactions" #Must be unique in Heroku
-          heroku_email: "dserbenyukgood@gmail.com"
+  # heroku_git_deploy_job:
+  #   needs: test
+  #   runs-on: ubuntu-latest
+  #   name: deploy django app to heroku
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
+  #       with:
+  #         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #         heroku_app_name: "djangogithubactions" #Must be unique in Heroku
+  #         heroku_email: "dserbenyukgood@gmail.com"
