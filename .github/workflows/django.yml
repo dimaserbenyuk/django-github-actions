@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# env:
-#   REGISTRY: ghcr.io
-#   IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,13 +28,6 @@ jobs:
         path: |
           venv
         key: ${{ runner.os }}-venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/*requirements.txt') }}    
-
-    # - uses: actions/checkout@v3
-    #   name: Cache pip dependencies
-    # - uses: actions/setup-python@v4
-    #   with:
-    #     python-version: '3.9'
-    #     cache: 'pip'
 
     - name: Install dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true'
@@ -108,11 +97,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
             
-
-      # - name: Set environment variables
-      #   run: |
-      #     echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
-      #     echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
       - name: Log in to GitHub Packages
         run: echo ${TOKEN} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
         env:
