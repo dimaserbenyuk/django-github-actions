@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
+
+env:
+  WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/core_app
+  NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx    
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -79,63 +84,30 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout master
+        uses: actions/checkout@v1
+      
+      - name: Set environment variables
+        run: |
+          echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
+          echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
+      - name: Log in to GitHub Packages
+        run: echo ${TOKEN} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+      - name: Pull images
+        run: |
+          docker pull ${{ env.WEB_IMAGE }} || true
+          docker pull ${{ env.NGINX_IMAGE }} || true
+      - name: Build images
+        run: |
+          docker-compose -f docker-compose.dev.yaml build
+      - name: Push images
+        run: |
+          docker push ${{ env.WEB_IMAGE }}
+          docker push ${{ env.NGINX_IMAGE }}
 
-      - uses: actions/setup-python@v4
-        id: setup-python
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Generate image identifier
-        id: image
-        uses: ASzc/change-string-case-action@v5
-        with:
-          string: ${{ github.repository_owner }}
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        if: ${{ github.ref == 'refs/heads/master' }}
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Build web image
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     dockerfile: ./docker/production/Dockerfile
-      #     context: .
-      #     target: nginx
-      #     push: ${{ github.ref == 'refs/heads/master' }}
-      #     tags: |
-      #       ghcr.io/${{ steps.image.outputs.lowercase }}/monolith-web:latest
-      #       ghcr.io/${{ steps.image.outputs.lowercase }}/monolith-web:${{ github.sha }}
-      #     build-args: |
-      #       PYTHON_VERSION=${{ steps.setup-python.outputs.python-version }}
-      #       RELEASE=${{ github.sha }}
-      #     cache-from: type=gha
-      #     cache-to: type=gha,mode=max
-
-      - name: Build worker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          target: core_app
-          push: ${{ github.ref == 'refs/heads/master' }}
-          tags: |
-            ghcr.io/${{ steps.image.outputs.lowercase }}/core_app:latest
-            ghcr.io/${{ steps.image.outputs.lowercase }}/core_app:${{ github.sha }}
-          build-args: |
-            PYTHON_VERSION=${{ steps.setup-python.outputs.python-version }}
-            RELEASE=${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
 
   # senrty:
