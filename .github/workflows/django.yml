@@ -82,6 +82,17 @@ jobs:
   build-docker-image:
     needs: test
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: ./Dockerfile
+            image: ghcr.io/dimaserbenyuk/core_app
+          - dockerfile: ./docker/nginx/development/Dockerfile
+            image: ghcr.io/dimaserbenyuk/nginx
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout master
         uses: actions/checkout@v1
@@ -99,16 +110,17 @@ jobs:
         run: echo ${TOKEN} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
         env:
           TOKEN: ${{ secrets.TOKEN }}
-      - name: Extract metadata for the Docker image
+      - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ matrix.image }}
 
-      - name: Build and push the Docker image
+      - name: Build and push Docker
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
+          file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
