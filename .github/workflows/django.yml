@@ -7,8 +7,8 @@ on:
     branches: [ "main" ]
 
 env:
-  WEB_IMAGE: ghcr.io/django-github-actions/web
-  NGINX_IMAGE: ghcr.io/django-github-actions/nginx  
+  WEB_IMAGE: ghcr.io/django-github-actions_core_app:latest
+  NGINX_IMAGE: ghcr.io/django-github-actions_nginx:latest
 
 jobs:
   build:
