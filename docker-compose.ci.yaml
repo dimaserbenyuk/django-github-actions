@@ -1,11 +1,7 @@
 version: '3.9'
 services:
   nginx: 
-    restart: unless-stopped
-    container_name: nginx
-    build:
-      context: .
-      dockerfile: ./docker/nginx/development/Dockerfile
+    image: ghcr.io/dimaserbenyuk/nginx:main
     ports:
       - 80:80
     volumes:
@@ -15,14 +11,12 @@ services:
     depends_on: 
       - core_app
   core_app:
-    container_name: core_app
-    build: .
-    restart: unless-stopped
+    image: ghcr.io/dimaserbenyuk/core_app:main
     env_file: .env
     ports:
       - "8000:8000"
     command: >
-      sh -c " python manage.py migrate && python manage.py collectstatic --noinput &&
+      sh -c " python manage.py migrate &&
           gunicorn djangoGithubActions.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - .:/app

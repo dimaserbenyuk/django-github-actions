@@ -20,3 +20,5 @@ python manage.py runserver
 docker-compose -f docker-compose.yml up --build -d
 
 python manage.py createsuperuser
+
+python manage.py collectstatic --noinput
