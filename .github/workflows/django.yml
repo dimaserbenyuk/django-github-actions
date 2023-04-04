@@ -7,8 +7,8 @@ on:
     branches: [ "main" ]
 
 env:
-  WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/core_app:latest
-  NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx    
+  WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web
+  NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx  
 
 jobs:
   build:
@@ -88,6 +88,8 @@ jobs:
       - name: Add environment variables to .env
         run: |
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+          echo "WEB_IMAGE=${{ env.WEB_IMAGE }}" >> .env
+          echo "NGINX_IMAGE=${{ env.NGINX_IMAGE }}" >> .env
 
       - name: Set environment variables
         run: |
@@ -106,7 +108,7 @@ jobs:
           docker-compose -f docker-compose.dev.yaml build
       - name: Push images
         run: |
-          docker push django-github-actions_core_app:latest
+          docker push ${{ env.WEB_IMAGE }}
           
           docker push ${{ env.NGINX_IMAGE }}
 
