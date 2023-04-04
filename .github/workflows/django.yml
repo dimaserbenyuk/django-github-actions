@@ -106,7 +106,8 @@ jobs:
           docker-compose -f docker-compose.dev.yaml build
       - name: Push images
         run: |
-          docker push ${{ env.WEB_IMAGE }}
+          docker push django-github-actions_core_app:latest
+          
           docker push ${{ env.NGINX_IMAGE }}
 
 
