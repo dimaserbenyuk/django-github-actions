@@ -1,13 +1,10 @@
 version: '3.9'
 services:
-  nginx:
+  nginx: 
+    restart: unless-stopped
     build:
-      context: ./nginx
+      context: .
       dockerfile: ./docker/nginx/development/Dockerfile
-      cache_from:
-        - "${NGINX_IMAGE}"
-    image: "${NGINX_IMAGE}"
-      
     ports:
       - 80:80
     volumes:
@@ -15,14 +12,11 @@ services:
       - media_volume:/app/media
       - ./docker/nginx/development:/etc/nginx/conf.d
     depends_on: 
-      - web
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      cache_from:
-        - "${WEB_IMAGE}"
-    image: "${WEB_IMAGE}"
+      - core_app
+  core_app:
+    container_name: core_app
+    build: .
+    restart: unless-stopped
     env_file: .env
     ports:
       - "8000:8000"

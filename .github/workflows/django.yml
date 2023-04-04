@@ -7,8 +7,8 @@ on:
     branches: [ "main" ]
 
 env:
-  WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web
-  NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx  
+  WEB_IMAGE: ghcr.io/django-github-actions/web
+  NGINX_IMAGE: ghcr.io/django-github-actions/nginx  
 
 jobs:
   build:
@@ -109,8 +109,7 @@ jobs:
       - name: Push images
         run: |
           docker push ${{ env.WEB_IMAGE }}
-          
-          docker push ${{ env.NGINX_IMAGE }}
+
 
 
 
