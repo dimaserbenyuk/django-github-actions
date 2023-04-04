@@ -86,7 +86,10 @@ jobs:
     steps:
       - name: Checkout master
         uses: actions/checkout@v1
-      
+      - name: Add environment variables to .env
+        run: |
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+
       - name: Set environment variables
         run: |
           echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
