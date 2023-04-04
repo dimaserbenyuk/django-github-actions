@@ -2,12 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches:
-      - 'main'
-
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - 'main'     
+    branches: [ "main" ]
 
 env:
   REGISTRY: ghcr.io
@@ -122,15 +119,9 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v4
-        # id: meta
-        # uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          flavor: latest=true
           images: ${{ matrix.image }}
-
-           
 
       - name: Build and push Docker
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -143,7 +134,9 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          
+
+
+
 
 
   # senrty:
