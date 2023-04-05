@@ -22,3 +22,5 @@ docker-compose -f docker-compose.yml up --build -d
 python manage.py createsuperuser
 
 python manage.py collectstatic --noinput
+
+loadtest -n 300 -c 10  -k  http://localhost:8000/admin
