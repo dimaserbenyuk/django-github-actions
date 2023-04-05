@@ -52,10 +52,17 @@ INSTALLED_APPS = [
 
 ]
 
+# Once the cache is set up, the simplest way to use caching is to cache your entire site.
+# You’ll need to add 
+# 'django.middleware.cache.UpdateCacheMiddleware' and
+# 'django.middleware.cache.FetchFromCacheMiddleware' to your MIDDLEWARE setting
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.cache.UpdateCacheMiddleware",
     'django.middleware.common.CommonMiddleware',
+    "django.middleware.cache.FetchFromCacheMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -93,6 +100,28 @@ DATABASES = {
     }
 }
 
+# To use Redis as your cache backend with Django:
+
+# Set BACKEND to django.core.cache.backends.redis.RedisCache.
+# Set LOCATION to the URL pointing to your Redis instance, using the appropriate scheme. See the redis-py docs for details on the available schemes.
+# For example, if Redis is running on localhost (127.0.0.1) port 6379:
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "db": 0,
+            "parser_class": "redis.connection.PythonParser",
+            "pool_class": "redis.BlockingConnectionPool",
+    
+        }
+    }
+}
+
+# Cache time to live is 15 minutes.
+CACHE_TTL = 60 * 15
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
