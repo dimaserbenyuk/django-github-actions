@@ -19,6 +19,8 @@ services:
     build: .
     restart: unless-stopped
     env_file: .env
+    environment:
+      - REDIS_HOST=redis
     ports:
       - "8000:8000"
     command: >
@@ -28,7 +30,19 @@ services:
       - .:/app
       - static_volume:/app/static
       - media_volume:/app/media
-
+    depends_on:
+      - redis  
+  redis:
+    image: 'redis:6.2.11-alpine'
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning  
+    hostname: redis    
+    volumes:
+      - redisdata:/data
 volumes:
   static_volume:
   media_volume:
+  redisdata:
