@@ -5,7 +5,7 @@
 __pycache__
 db.sqlite3
 media
-docker/nginx/cerbot/conf/
+docker/nginx/cerbot/**
 # Backup files # 
 *.bak 
 
