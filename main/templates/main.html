@@ -22,6 +22,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="HandheldFriendly" content="true">
 
+
+
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -111,6 +116,12 @@
                             <p class="btn-text"><b>Sign in with Google</b></p>
                         </a>
                     </div>
+                    <div class="checkbox mb-3">
+                        <!-- The Turnstile widget will be injected in the following div. -->
+                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAADj43RI5QdSmSU9" data-theme="light"></div>
+                        <!-- end. -->
+                    </div>
+
                     {% endif %}
                 </div>
 
@@ -121,6 +132,19 @@
         </div>
     </div>
 
+
+<script>
+    // This function is called when the Turnstile script is loaded and ready to be used.
+    // The function name matches the "onload=..." parameter.
+    function _turnstileCb() {
+        console.debug('_turnstileCb called');
+    
+        turnstile.render('#myWidget', {
+            sitekey: '0x4AAAAAAADj43RI5QdSmSU9',
+            theme: 'light',
+        });
+    }
+    </script>
 
 </body>
 

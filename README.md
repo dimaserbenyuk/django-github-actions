@@ -38,3 +38,7 @@ brew services stop redis
 python -m pip install redis
 
 pip install django-redis
+
+----
+
+docker exec -it core_app sh -c "python manage.py collectstatic"
