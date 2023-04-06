@@ -116,13 +116,13 @@
                             <p class="btn-text"><b>Sign in with Google</b></p>
                         </a>
                     </div>
-                    <div class="checkbox mb-3">
-                        <!-- The Turnstile widget will be injected in the following div. -->
-                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAADj43RI5QdSmSU9" data-theme="light"></div>
-                        <!-- end. -->
-                    </div>
+
 
                     {% endif %}
+                </div>
+
+                <div class="flex justify-center mb-3">
+                    <div class="cf-turnstile" data-sitekey="0x4AAAAAAADj43RI5QdSmSU9" data-theme="light"></div>
                 </div>
 
                 <div class="flex flex-col">
@@ -131,20 +131,6 @@
             </div>
         </div>
     </div>
-
-
-<!-- <script>
-    // This function is called when the Turnstile script is loaded and ready to be used.
-    // The function name matches the "onload=..." parameter.
-    function _turnstileCb() {
-        console.debug('_turnstileCb called');
-    
-        turnstile.render('#myWidget', {
-            sitekey: '0x4AAAAAAADj43RI5QdSmSU9',
-            theme: 'light',
-        });
-    }
-    </script> -->
 
 </body>
 
