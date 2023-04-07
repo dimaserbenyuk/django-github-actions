@@ -42,3 +42,17 @@ pip install django-redis
 ----
 
 docker exec -it core_app sh -c "python manage.py collectstatic"
+
+docker stats nginx core_app redis
+
+CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O        PIDS
+617dd571318d   nginx      0.00%     3.555MiB / 4.818GiB   0.07%     54.1kB / 52.8kB   1.72MB / 4.1kB   4
+0efed4d3b46f   core_app   0.06%     66.77MiB / 4.818GiB   1.35%     68.6kB / 82.8kB   11.1MB / 213kB   4
+3dc7662c0a84   redis      0.54%     4.258MiB / 4.818GiB   0.09%     12.8kB / 40.3kB   7.38MB / 4.1kB   5
+
+
+backup db to json 
+
+python -Xutf8 ./manage.py dumpdata > data.json
+
+python manage.py check --database default
