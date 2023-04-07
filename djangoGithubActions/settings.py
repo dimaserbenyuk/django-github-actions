@@ -106,13 +106,16 @@ DATABASES = {
 # Set LOCATION to the URL pointing to your Redis instance, using the appropriate scheme. See the redis-py docs for details on the available schemes.
 # For example, if Redis is running on localhost (127.0.0.1) port 6379:
 
-REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
-REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+# REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
+# REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+
+# Redis
+REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")
 
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://{}:{}/1".format(REDIS_HOST, REDIS_PORT),
+        "LOCATION": REDIS_URL,
         "OPTIONS": {
             "db": 0,
             "parser_class": "redis.connection.PythonParser",
@@ -124,6 +127,12 @@ CACHES = {
 
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15
+
+
+# Celery
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
