@@ -42,7 +42,47 @@ services:
     hostname: redis    
     volumes:
       - redisdata:/data
+
+  celery:
+    build: .
+    container_name: celery
+    command: celery --app=djangoGithubActions worker --loglevel=info --logfile=logs/celery.log
+    environment:
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - core_app
+      - redis   
+    volumes:
+      - celery:/celerydata   
+
+  worker_1:
+    build: .
+    container_name: worker1
+    restart: always
+    command: celery --app=djangoGithubActions worker --loglevel=info --logfile=logs/celery.log
+    depends_on:
+      - redis
+      - core_app
+      - celery
+    
+
+
+  dashboard:
+    build: .
+    container_name: dashboard
+    command: celery flower -A djangoGithubActions --port=5555 --broker=redis://redis:6379/0
+    ports:
+      - 5555:5555
+    environment:
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - core_app
+      - redis
+      - celery    
 volumes:
   static_volume:
   media_volume:
   redisdata:
+  celery:
