@@ -37,6 +37,12 @@ ENV DEBUG="${DEBUG}" \
 
 COPY --chown=python:python . .
 
+WORKDIR /app
+
+RUN if [ "${DEBUG}" = "true" ]; then \
+  python3 manage.py collectstatic --no-input; \
+ fi
+
 EXPOSE 8000
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "1", "djangoGithubActions.wsgi:application"]
