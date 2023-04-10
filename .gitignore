@@ -140,3 +140,4 @@ htmlcov/
 .coverage.*
 coverage.xml
 *.cover
+static

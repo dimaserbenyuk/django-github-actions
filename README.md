@@ -58,3 +58,5 @@ python -Xutf8 ./manage.py dumpdata > data.json
 python manage.py check --database default
 
 curl -F type=1 http://localhost/tasks/
+
+aws static
