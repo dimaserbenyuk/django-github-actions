@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+from decouple import config
 from pathlib import Path
 
 #import django_heroku
@@ -25,8 +26,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#v)+2-68_iyd24ysk@wj_uuw--3xm8lrmka=o+*c=c71(=sp5c'
-
+# SECRET_KEY = 'django-insecure-#v)+2-68_iyd24ysk@wj_uuw--3xm8lrmka=o+*c=c71(=sp5c'
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'main',
     'tasks',
+    'storages',
 
 ]
 
@@ -162,18 +164,31 @@ USE_I18N = True
 
 USE_TZ = True
 
-#STATIC_URL = 'static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, '/static/')
+# ]
+# STATIC_URL = '/static/'   
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# AWS S3 Static Files Configuration
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '/static/')
+    os.path.join(BASE_DIR, '/static'),
 ]
-STATIC_URL = '/static/'   
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 # Default primary key field type
