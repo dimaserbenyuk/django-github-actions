@@ -3,17 +3,18 @@ from .models import Article, ArticleSeries
 
 class ArticleSeriesAdmin(admin.ModelAdmin):
     fields = [
-        "title",
-        "subtitle",
-        "slug",
-        "published"
+        'title',
+        'subtitle',
+        'slug',
+        'author',
+        'published'
     ]
 
 class ArticleAdmin(admin.ModelAdmin):
     fieldsets = [
-        ("Header", {'fields': ["title", "subtitle", "article_slug", "series"]}),
-        ("Content", {"fields": ["content", "notes"]}),
-        ("Date", {"fields": ["modified"]})
+        ("Header", {"fields": ['title', 'subtitle', 'article_slug', 'series', 'author']}),
+        ("Content", {"fields": ['content', 'notes']}),
+        ("Date", {"fields": ['modified']})
     ]
 
 # Register your models here.
