@@ -13,4 +13,4 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 @cache_page(CACHE_TTL)
 @csrf_protect 
 def main(request):
-    return HttpResponse("Successfully logged in!")
+    return HttpResponse("Successfully eee logged in!")
