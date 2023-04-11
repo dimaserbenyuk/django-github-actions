@@ -52,8 +52,11 @@ INSTALLED_APPS = [
     'main',
     'tasks',
     'storages',
+    'users',
 
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Once the cache is set up, the simplest way to use caching is to cache your entire site.
 # You’ll need to add 
