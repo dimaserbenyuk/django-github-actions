@@ -10,7 +10,7 @@
         </div>
         <div class="d-flex article-metadata">
             <div>
-                <a class='mr-2' href="{% url 'profile'  object.author %}">{{ object.author }}</a>
+                <a class='mr-2' href="{% url 'profile' object.author %}">{{ object.author }}</a>
                 <small class="text-muted">Published {{ object.published|date:"F d, Y" }}</small>
             </div>
             {% if object.author == user %}

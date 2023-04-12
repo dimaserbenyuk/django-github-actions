@@ -56,8 +56,13 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'crispy_bootstrap4',
     'crispy_forms',
+    'captcha',
 
 ]
+
+RECAPTCHA_PUBLIC_KEY = '6Le_g34lAAAAAPS5_SSixUwmOKUy_-sXOYli65Xu'
+RECAPTCHA_PRIVATE_KEY = '6Le_g34lAAAAAM5K0lEebInexJCoND7iuufNvT81'
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -120,24 +125,24 @@ DATABASES = {
 # Set LOCATION to the URL pointing to your Redis instance, using the appropriate scheme. See the redis-py docs for details on the available schemes.
 # For example, if Redis is running on localhost (127.0.0.1) port 6379:
 
-REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
-REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+# REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
+# REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
 
 # # Redis
 # REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://{}:{}/1".format(REDIS_HOST, REDIS_PORT),
-        "OPTIONS": {
-            "db": 0,
-            "parser_class": "redis.connection.PythonParser",
-            "pool_class": "redis.BlockingConnectionPool",
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#         "LOCATION": "redis://{}:{}/1".format(REDIS_HOST, REDIS_PORT),
+#         "OPTIONS": {
+#             "db": 0,
+#             "parser_class": "redis.connection.PythonParser",
+#             "pool_class": "redis.BlockingConnectionPool",
     
-        }
-    }
-}
+#         }
+#     }
+# }
 
 # Cache time to live is 15 minutes.
 # CACHE_TTL = 60 * 15
