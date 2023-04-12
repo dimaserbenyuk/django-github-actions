@@ -14,12 +14,14 @@ click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
 coverage==7.2.3
+crispy-bootstrap4==2022.1
 cryptography==40.0.1
 defusedxml==0.7.1
 Django==4.2
 django-allauth==0.53.1
 django-crispy-forms==2.0
 django-environ==0.10.0
+django-recaptcha==3.0.0
 django-redis==5.2.0
 django-storages==1.13.2
 django-tinymce==3.6.1

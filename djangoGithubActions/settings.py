@@ -54,9 +54,15 @@ INSTALLED_APPS = [
     'users',
     'tinymce',
     'fontawesomefree',
+    'crispy_bootstrap4',
     'crispy_forms',
+    'captcha',
 
 ]
+
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -139,8 +145,8 @@ CACHES = {
 }
 
 # Cache time to live is 15 minutes.
-# CACHE_TTL = 60 * 15
 CACHE_TTL = 1
+
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
@@ -167,6 +173,19 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
+# Emailing settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_FROM = config('EMAIL_FROM')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+PASSWORD_RESET_TIMEOUT = 14400
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 # 5MB
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -181,8 +200,8 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'   
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # AWS S3 Static Files Configuration
@@ -204,17 +223,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # DEFAULT_FILE_STORAGE = 'djangoGithubActions.storage_backends.MediaStorage'
 
-# media files configuration
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-SITE_ID = 3                    #When adding a site, increase by one setting current_site = example 
+SITE_ID = 4                    #When adding a site, increase by one setting current_site = example 
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET= True
 ACCOUNT_UNIQUE_EMAIL = True
