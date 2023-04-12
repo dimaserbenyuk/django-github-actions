@@ -8,7 +8,7 @@ class ArticleSeriesAdmin(admin.ModelAdmin):
         'slug',
         'author',
         'image',
-        'published'
+        # 'published'
     ]
 
 class ArticleAdmin(admin.ModelAdmin):
