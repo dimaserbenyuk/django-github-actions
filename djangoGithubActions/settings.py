@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'users',
     'tinymce',
     'fontawesomefree',
+    'crispy_bootstrap4',
     'crispy_forms',
 
 ]
