@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-container
+  template:
+    metadata:
+      labels:
+        app: postgres-container
+        tier: backend
+    spec:
+      containers:
+        - name: postgres-container
+          image: postgres:15.1
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_PASSWORD
+
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_DB
+
+          ports:
+            - containerPort: 5432
+          resources:
+            requests:
+              cpu: 200m
+              memory: 500Mi
+            limits:
+              cpu: 500m
+              memory: 600Mi  
+
+
+          volumeMounts:
+            - name: postgres-volume-mount
+              mountPath: /var/lib/postgresql/data
+
+      volumes:
+        - name: postgres-volume-mount
+          persistentVolumeClaim:
+            claimName: postgres-new-pv-claim
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres-service
+spec:
+  selector:
+    app: postgres-container
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

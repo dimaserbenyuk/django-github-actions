@@ -118,6 +118,17 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': config('POSTGRES_DB'),
+#         'USER': config('POSTGRES_USER'),
+#         'PASSWORD': config('POSTGRES_PASSWORD'),
+#         'HOST': config('POSTGRES_HOST'),
+#         'PORT': config('POSTGRES_PORT', 5432)
+#      }
+# }
+
 
 # To use Redis as your cache backend with Django:
 
@@ -125,8 +136,8 @@ DATABASES = {
 # Set LOCATION to the URL pointing to your Redis instance, using the appropriate scheme. See the redis-py docs for details on the available schemes.
 # For example, if Redis is running on localhost (127.0.0.1) port 6379:
 
-REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
-REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+REDIS_HOST = config('REDIS_HOST', '127.0.0.1')
+REDIS_PORT = config('REDIS_PORT', '6379')
 
 # # Redis
 # REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")

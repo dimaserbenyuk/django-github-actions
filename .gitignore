@@ -141,3 +141,4 @@ htmlcov/
 coverage.xml
 *.cover
 static
+ArticleSeries

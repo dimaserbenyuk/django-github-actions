@@ -21,9 +21,27 @@ docker-compose -f docker-compose.yml up --build -d
 
 python manage.py createsuperuser
 
+python manage.py makemigrations
+
+python manage.py migrate
+
 python manage.py collectstatic --noinput
 
 loadtest -n 300 -c 10  -k  http://localhost:8000/admin
+
+
+python manage.py migrate --run-syncdb
+
+Run this on the Django shell to exclude contentype data:
+
+python manage.py shell
+
+>>> from django.contrib.contenttypes.models import ContentType
+>>> ContentType.objects.all().delete()
+>>> quit()
+Finally, load JSON data into the database:
+
+python manage.py loaddata data.json
 
 brew install redis
 
